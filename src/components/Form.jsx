@@ -9,19 +9,31 @@ import {
   Label2,
 } from "./ui";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Form = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const ref = useRef(null);
 
+  const handleInputChange = (e, fieldName) => {
+    const newValue = e.target.value;
+    // console.log(`${fieldName} ha cambiado a: ${newValue}`);
+
+    setValue(fieldName, newValue, { shouldValidate: true });
+  };
+
+  const navigate = useNavigate();
+
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     ref.current.focus();
+    navigate("/Datosdelformulario", { state: { userData: data } });
   });
   return (
     <>
@@ -56,8 +68,17 @@ const Form = () => {
                   },
                 }}
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
-                  <Input {...field} type="text" ref={ref} />
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "nombre");
+                    }}
+                  />
                 )}
               />
               <Label2>
@@ -83,8 +104,17 @@ const Form = () => {
                   },
                 }}
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
-                  <Input {...field} type="text" ref={ref} />
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "segundoNombre");
+                    }}
+                  />
                 )}
               />
               <Label2>
@@ -111,8 +141,17 @@ const Form = () => {
                   },
                 }}
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
-                  <Input {...field} type="text" ref={ref} />
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "apellido");
+                    }}
+                  />
                 )}
               />
               <Label2>
@@ -136,7 +175,18 @@ const Form = () => {
                 required: "de nacimiento es requerida",
               }}
               control={control}
-              render={({ field }) => <Input {...field} type="date" ref={ref} />}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="date"
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "fechaNacimiento");
+                  }}
+                />
+              )}
             />
             <Label2>
               Fecha{" "}
@@ -155,12 +205,20 @@ const Form = () => {
                 required: "Este campo es obligatorio",
               }}
               control={control}
+              defaultValue=""
               render={({ field }) => (
-                <Select {...field} ref={ref}>
+                <Select
+                  {...field}
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "genero");
+                  }}
+                >
                   <option value="">Please Select</option>
-                  <option value="M">Masculino</option>
-                  <option value="F">Femenino</option>
-                  <option value="NA">N/A</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="N/A">N/A</option>
                 </Select>
               )}
             />
@@ -180,7 +238,18 @@ const Form = () => {
               required: "es requerida",
             }}
             control={control}
-            render={({ field }) => <Input {...field} type="text" ref={ref} />}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                type="text"
+                ref={ref}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange(e, "direccion");
+                }}
+              />
+            )}
           />
           <Label2>
             Dirección de la calle{" "}
@@ -191,7 +260,18 @@ const Form = () => {
           <Controller
             name="direccionCalleLinea"
             control={control}
-            render={({ field }) => <Input {...field} type="text" ref={ref} />}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                {...field}
+                type="text"
+                ref={ref}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange(e, "direccionCalleLinea");
+                }}
+              />
+            )}
           />
           <Label2>Dirección de la calle Línea 2</Label2>
           <div className="flex flex-col sm:flex-row sm:gap-x-8">
@@ -202,8 +282,17 @@ const Form = () => {
                   required: "es requerida",
                 }}
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
-                  <Input {...field} type="text" ref={ref} />
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "ciudad");
+                    }}
+                  />
                 )}
               />
               <Label2>
@@ -222,8 +311,17 @@ const Form = () => {
                   required: "es requerida",
                 }}
                 control={control}
+                defaultValue=""
                 render={({ field }) => (
-                  <Input {...field} type="text" ref={ref} />
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "estadoProvincia");
+                    }}
+                  />
                 )}
               />
               <Label2>
@@ -242,8 +340,17 @@ const Form = () => {
               required: "es requerida",
             }}
             control={control}
+            defaultValue=""
             render={({ field }) => (
-              <Input {...field} type="numbers" ref={ref} />
+              <Input
+                {...field}
+                type="numbers"
+                ref={ref}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange(e, "codigoPostal");
+                }}
+              />
             )}
           />
           <Label2>
@@ -269,7 +376,17 @@ const Form = () => {
                 },
               }}
               control={control}
-              render={({ field }) => <Input {...field} ref={ref} />}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "email");
+                  }}
+                />
+              )}
             />
             <Label2>
               {errors?.email?.message && (
@@ -290,7 +407,18 @@ const Form = () => {
                 },
               }}
               control={control}
-              render={({ field }) => <Input {...field} type="tel" ref={ref} />}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="tel"
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "numeroTelefono");
+                  }}
+                />
+              )}
             />
             <Label2>
               {errors?.numeroTelefono?.message && (
@@ -305,36 +433,53 @@ const Form = () => {
 
         <div className=" mb-5 ms:mb-10">
           <Label1>Ha recibido otros cursos Anteriormente</Label1>
-          <div className="flex gap-x-40">
-            <div className="flex gap-x-1">
-              <Controller
-                name="cursosAnteriormente"
-                rules={{
-                  required: "Este campo es obligatorio",
-                }}
-                control={control}
-                render={({ field }) => (
-                  <InputRadio {...field} type="checkbox" ref={ref} />
-                )}
-              />
-              <Label2>Si</Label2>
-            </div>
-            <div className="flex gap-x-1">
-              <Controller
-                name="cursosAnteriormente"
-                rules={{
-                  required: "Este campo es obligatorio",
-                }}
-                control={control}
-                render={({ field }) => (
-                  <InputRadio {...field} type="checkbox" ref={ref} />
-                )}
-              />
-              <Label2>No</Label2>
-            </div>
-          </div>
+          <Controller
+            name="cursosAnteriormente"
+            control={control}
+            defaultValue=""
+            rules={{
+              validate: (value) => {
+                if (!value) return "Este campo es obligatorio";
+                return true;
+              },
+            }}
+            render={({ field }) => (
+              <div className="flex gap-x-40">
+                <div className="flex flex-row">
+                  <InputRadio
+                    type="checkbox"
+                    value="Si"
+                    {...field}
+                    checked={field.value === "Si"}
+                    onChange={(e) => {
+                      setValue(
+                        "cursosAnteriormente",
+                        e.target.checked ? "Si" : ""
+                      );
+                    }}
+                  />
+                  <Label2>Si</Label2>
+                </div>
+                <div className="flex flex-row">
+                  <InputRadio
+                    type="checkbox"
+                    value="No"
+                    {...field}
+                    checked={field.value === "No"}
+                    onChange={(e) => {
+                      setValue(
+                        "cursosAnteriormente",
+                        e.target.checked ? "No" : ""
+                      );
+                    }}
+                  />
+                  <Label2>No</Label2>
+                </div>
+              </div>
+            )}
+          />
           <Label2>
-            {errors?.cursosAnteriormente?.message && (
+            {errors?.cursosAnteriormente && (
               <p className="text-red-600">
                 {errors?.cursosAnteriormente?.message}
               </p>
@@ -348,7 +493,18 @@ const Form = () => {
             <Controller
               name="empresa"
               control={control}
-              render={({ field }) => <Input {...field} type="text" ref={ref} />}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="text"
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "empresa");
+                  }}
+                />
+              )}
             />
           </div>
           <div className="flex flex-col sm:w-1/2">
@@ -356,19 +512,33 @@ const Form = () => {
             <Controller
               name="cursos"
               control={control}
+              defaultValue=""
               render={({ field }) => (
-                <Select {...field} ref={ref}>
+                <Select
+                  {...field}
+                  ref={ref}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    handleInputChange(e, "cursos");
+                  }}
+                >
                   <option value="">Please Select</option>
-                  <option value="W">Windonws 8</option>
-                  <option value="IL">Introducción a Linux</option>
-                  <option value="I101">Inglés 101</option>
-                  <option value="I102">Inglés 102</option>
-                  <option value="E1">Escritura creativa 1</option>
-                  <option value="E2">Escritura creativa 2</option>
-                  <option value="H101">Historia 101</option>
-                  <option value="H102">Historia 102</option>
-                  <option value="M101">Matemáticas 101</option>
-                  <option value="M102">Matemáticas 102</option>
+                  <option value="Windonws 8">Windonws 8</option>
+                  <option value="Introducción a Linux">
+                    Introducción a Linux
+                  </option>
+                  <option value="Inglés 101">Inglés 101</option>
+                  <option value="Inglés 102">Inglés 102</option>
+                  <option value="Escritura creativa 1">
+                    Escritura creativa 1
+                  </option>
+                  <option value="Escritura creativa 2">
+                    Escritura creativa 2
+                  </option>
+                  <option value="Historia 101">Historia 101</option>
+                  <option value="Historia 102">Historia 102</option>
+                  <option value="Matemáticas 101">Matemáticas 101</option>
+                  <option value="Matemáticas 102">Matemáticas 102</option>
                 </Select>
               )}
             />
@@ -380,8 +550,17 @@ const Form = () => {
           <Controller
             name="comentariosAdicionales"
             control={control}
+            defaultValue=""
             render={({ field }) => (
-              <TexTarea {...field} type="text" ref={ref} />
+              <TexTarea
+                {...field}
+                type="text"
+                ref={ref}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleInputChange(e, "comentariosAdicionales");
+                }}
+              />
             )}
           />
         </div>
