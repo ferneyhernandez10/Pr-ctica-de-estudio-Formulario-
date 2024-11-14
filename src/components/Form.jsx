@@ -29,7 +29,7 @@ const Form = () => {
     setValue(fieldName, newValue, { shouldValidate: true });
   };
 
-  const siSeleccionado = watch("cursosAnteriormente") === "Si";
+  const yesSelected = watch("cursosAnteriormente") === "Si";
 
   const navigate = useNavigate();
 
@@ -490,7 +490,7 @@ const Form = () => {
           </Label2>
         </div>
 
-        {siSeleccionado && (
+        {yesSelected && (
           <div className="flex flex-col gap-y-4 mb-5 sm:flex-row sm:gap-x-8 sm:mb-10">
             <div className="flex flex-col sm:w-1/2">
               <Label1>Empresa</Label1>
