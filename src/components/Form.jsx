@@ -17,6 +17,7 @@ const Form = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm();
 
   const ref = useRef(null);
@@ -27,6 +28,8 @@ const Form = () => {
 
     setValue(fieldName, newValue, { shouldValidate: true });
   };
+
+  const siSeleccionado = watch("cursosAnteriormente") === "Si";
 
   const navigate = useNavigate();
 
@@ -487,63 +490,65 @@ const Form = () => {
           </Label2>
         </div>
 
-        <div className="flex flex-col gap-y-4 mb-5 sm:flex-row sm:gap-x-8 sm:mb-10">
-          <div className="flex flex-col sm:w-1/2">
-            <Label1>Empresa</Label1>
-            <Controller
-              name="empresa"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="text"
-                  ref={ref}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange(e, "empresa");
-                  }}
-                />
-              )}
-            />
+        {siSeleccionado && (
+          <div className="flex flex-col gap-y-4 mb-5 sm:flex-row sm:gap-x-8 sm:mb-10">
+            <div className="flex flex-col sm:w-1/2">
+              <Label1>Empresa</Label1>
+              <Controller
+                name="empresa"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "empresa");
+                    }}
+                  />
+                )}
+              />
+            </div>
+            <div className="flex flex-col sm:w-1/2">
+              <Label1>Cursos</Label1>
+              <Controller
+                name="cursos"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    ref={ref}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      handleInputChange(e, "cursos");
+                    }}
+                  >
+                    <option value="">Please Select</option>
+                    <option value="Windonws 8">Windonws 8</option>
+                    <option value="Introducción a Linux">
+                      Introducción a Linux
+                    </option>
+                    <option value="Inglés 101">Inglés 101</option>
+                    <option value="Inglés 102">Inglés 102</option>
+                    <option value="Escritura creativa 1">
+                      Escritura creativa 1
+                    </option>
+                    <option value="Escritura creativa 2">
+                      Escritura creativa 2
+                    </option>
+                    <option value="Historia 101">Historia 101</option>
+                    <option value="Historia 102">Historia 102</option>
+                    <option value="Matemáticas 101">Matemáticas 101</option>
+                    <option value="Matemáticas 102">Matemáticas 102</option>
+                  </Select>
+                )}
+              />
+            </div>
           </div>
-          <div className="flex flex-col sm:w-1/2">
-            <Label1>Cursos</Label1>
-            <Controller
-              name="cursos"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  ref={ref}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    handleInputChange(e, "cursos");
-                  }}
-                >
-                  <option value="">Please Select</option>
-                  <option value="Windonws 8">Windonws 8</option>
-                  <option value="Introducción a Linux">
-                    Introducción a Linux
-                  </option>
-                  <option value="Inglés 101">Inglés 101</option>
-                  <option value="Inglés 102">Inglés 102</option>
-                  <option value="Escritura creativa 1">
-                    Escritura creativa 1
-                  </option>
-                  <option value="Escritura creativa 2">
-                    Escritura creativa 2
-                  </option>
-                  <option value="Historia 101">Historia 101</option>
-                  <option value="Historia 102">Historia 102</option>
-                  <option value="Matemáticas 101">Matemáticas 101</option>
-                  <option value="Matemáticas 102">Matemáticas 102</option>
-                </Select>
-              )}
-            />
-          </div>
-        </div>
+        )}
 
         <div className="flex flex-col">
           <Label1>Comentarios adicionales</Label1>
